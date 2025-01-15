@@ -1,0 +1,123 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class Main {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Tip calculator");
+        frame.setLayout(new BorderLayout());
+        frame.setSize(800, 400);
+        frame.getContentPane().setBackground(Color.PINK);
+
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.setBackground(Color.PINK);
+        centerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel label_message = new JLabel("Enter your bill and click on");
+        JLabel label_m_2 = new JLabel(" the % tip you want to apply: ");
+
+        label_message.setFont(new Font("Tahoma", Font.BOLD, 20));
+        label_m_2.setFont(new Font("Tahoma", Font.BOLD, 20));
+
+        label_message.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label_m_2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JTextField textbox1 = new JTextField(15);
+        textPanel.add(textbox1);
+
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JButton ten = new JButton("0.1");
+        JButton fifteen = new JButton("0.15");
+        JButton twenty = new JButton("0.2");
+        JButton zero = new JButton("0.0");
+
+        zero.setBackground(Color.RED);
+        twenty.setBackground(Color.GREEN);
+
+        buttons.add(ten);
+        buttons.add(fifteen);
+        buttons.add(twenty);
+        buttons.add(zero);
+
+        centerPanel.add(label_message);
+        centerPanel.add(label_m_2);
+        centerPanel.add(textPanel);
+        centerPanel.add(buttons);
+
+        JPanel results = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JLabel label_results = new JLabel("Result:");
+
+        label_results.setFont(new Font("Tahoma", Font.BOLD, 40));
+
+        results.add(label_results);
+        results.setPreferredSize(new Dimension(800, 80));
+
+        frame.add(centerPanel, BorderLayout.CENTER);
+        frame.add(results, BorderLayout.SOUTH);
+
+        frame.setVisible(true);
+
+        ten.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                buttonClicked("0.1", textbox1, label_results);
+            }
+        });
+
+        fifteen.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                buttonClicked("0.15", textbox1, label_results);
+            }
+        });
+
+        twenty.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                buttonClicked("0.2", textbox1, label_results);
+            }
+        });
+
+        zero.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                buttonClicked("0.0", textbox1, label_results);
+            }
+        });
+    }
+
+    public static void buttonStyle(JButton buttons) {
+        buttons.setFont(new Font("Arial", Font.BOLD, 32));
+        buttons.setForeground(Color.PINK);
+    }
+
+    public static void buttonClicked(String percentage, JTextField textbox1, JLabel label_results) {
+        String input = textbox1.getText();
+        if (input.isEmpty()) {
+            label_results.setText("Please enter a valid number.");
+            return;
+        }
+
+        double bill = Double.parseDouble(input);
+        double tip = 0;
+
+        switch (percentage) {
+            case "0.1":
+                tip = 0.1 * bill;
+                break;
+            case "0.15":
+                tip = 0.15 * bill;
+                break;
+            case "0.2":
+                tip = 0.2 * bill;
+                break;
+            case "0.0":
+                tip = 0;
+                break;
+            default:
+                label_results.setText("Invalid option.");
+                return;
+        }
+        double total = bill + tip;
+        label_results.setText("Tip: " + tip + ", Total: " + total);
+    }
+}
