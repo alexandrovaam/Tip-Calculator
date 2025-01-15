@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 class Main {
     public static void main(String[] args) {
+        //set frame
         JFrame frame = new JFrame("Tip calculator");
         frame.setLayout(new BorderLayout());
         frame.setSize(800, 400);
@@ -17,7 +18,7 @@ class Main {
 
         JLabel label_message = new JLabel("Enter your bill and click on");
         JLabel label_m_2 = new JLabel(" the % tip you want to apply: ");
-
+        
         label_message.setFont(new Font("Tahoma", Font.BOLD, 20));
         label_m_2.setFont(new Font("Tahoma", Font.BOLD, 20));
 
@@ -27,13 +28,15 @@ class Main {
         JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JTextField textbox1 = new JTextField(15);
         textPanel.add(textbox1);
-
+        
+        //set buttons and add them to the panel
         JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton ten = new JButton("0.1");
         JButton fifteen = new JButton("0.15");
         JButton twenty = new JButton("0.2");
         JButton zero = new JButton("0.0");
-
+        
+        //to urge the people NOT to pick 0.0 tip 
         zero.setBackground(Color.RED);
         twenty.setBackground(Color.GREEN);
 
@@ -46,7 +49,8 @@ class Main {
         centerPanel.add(label_m_2);
         centerPanel.add(textPanel);
         centerPanel.add(buttons);
-
+        
+        //where the results will be displayed  
         JPanel results = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel label_results = new JLabel("Result:");
 
@@ -54,12 +58,13 @@ class Main {
 
         results.add(label_results);
         results.setPreferredSize(new Dimension(800, 80));
-
+        
+        //for aesthetics 
         frame.add(centerPanel, BorderLayout.CENTER);
         frame.add(results, BorderLayout.SOUTH);
 
         frame.setVisible(true);
-
+        //what each button will do (using the method below)
         ten.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 buttonClicked("0.1", textbox1, label_results);
@@ -89,7 +94,9 @@ class Main {
         buttons.setFont(new Font("Arial", Font.BOLD, 32));
         buttons.setForeground(Color.PINK);
     }
-
+    
+    //checks if the text in the text field is valid 
+    //then --> the method that we use to set the buttons' action
     public static void buttonClicked(String percentage, JTextField textbox1, JLabel label_results) {
         String input = textbox1.getText();
         if (input.isEmpty()) {
@@ -99,7 +106,7 @@ class Main {
 
         double bill = Double.parseDouble(input);
         double tip = 0;
-
+        //switch case for each different tip amount
         switch (percentage) {
             case "0.1":
                 tip = 0.1 * bill;
@@ -118,6 +125,7 @@ class Main {
                 return;
         }
         double total = bill + tip;
+        //display 
         label_results.setText("Tip: " + tip + ", Total: " + total);
     }
 }
